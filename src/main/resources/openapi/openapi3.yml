@@ -1,0 +1,179 @@
+openapi: 3.0.0
+info:
+  title: A_iDa_012
+  version: 1.3.43
+paths:
+  /account/{accountNumber}/transactions:
+    get:
+      parameters:
+        - name: accountNumber
+          in: path
+          required: true
+          description: "Номер счета"
+          schema:
+            type: string
+        - name: curFormat
+          in: query
+          required: false
+          description: "Формат операции по валютному счету"
+          schema:
+            type: string
+        - name: statementDate
+          in: query
+          description: "Дата запрашиваемой выписки"
+          required: true
+          schema:
+            type: string
+            format: date-time
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Transactions"
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: Not Found
+          
+components:
+  schemas:
+    Transactions:
+        properties:
+          transactions:
+            type: array
+            items: 
+              $ref: '#/components/schemas/Transaction'
+        required:
+          - transactions
+
+    Transaction:  
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/Amount'
+        correspondingAccount:
+          type: string
+          pattern: '\d{20}$'
+        swiftTransfer:
+          $ref: '#/components/schemas/SwiftTransfer'
+        uuid:
+          type: string
+          format: uuid
+        transactionId:
+          type: integer
+          format: int64
+      required:
+        - correspondingAccount
+        - uuid
+        - transactionId
+            
+          
+    Amount:
+      type: object
+      properties:
+        amount:
+          type: integer
+          minimum: 0.01
+          pattern: '^\d*.\d{1,2}$'
+        currencyName:
+          type: string
+          pattern: '^\w[A-Z]{3}$'
+      required:
+        - amount
+        - currencyName
+          
+          
+    SwiftTransfer:
+      type: object
+      properties:
+        bankOperationCode:
+          type: string
+        beneficiaryBankAccount:
+          type: string
+        beneficiaryBankName:
+          type: string
+        beneficiaryBankOption:  
+          type: string
+        beneficiaryCustomerAccount:
+          type: string
+        beneficiaryCustomerName:
+          type: string
+        detailsOfCharges:
+          type: string
+        exchangeRate:
+          type: string
+          format: float
+        instructedAmount:
+          type: string
+        instructionCode:
+          type: string
+        intermediaryBankAccount:
+          type: string
+        intermediaryBankName:
+          type: string
+        intermediaryBankOption:
+          type: string
+        messageDestinator:
+          type: string
+        messageIdentifier:
+          type: string
+        essageOriginator:
+          type: string
+        messageReceiveTime:
+          type: string
+          format: date-time
+        messageSendTime:
+          type: string
+          format: date-time
+        messageType:
+          type: integer
+        orderingCustomerAccount:
+          type: string
+        orderingCustomerName:
+          type: string
+        orderingCustomerOption:
+          type: string
+        orderingInstitutionAccount:
+          type: string
+        orderingInstitutionName:
+          type: string
+        orderingInstitutionOption:
+          type: string
+        receiverCharges:
+          type: string
+          pattern: '^\w[A-Z]{3}\d+,\d{1,2}$'
+        receiverCorrespondentAccount:
+          type: string
+        receiverCorrespondentName:
+          type: string
+        receiverCorrespondentOption:
+          type: string
+        regulatoryReporting:
+          type: string
+        remittanceInformation:
+          type: string
+        senderCharges:
+          type: string
+          pattern: '^\w[A-Z]{3}\d+,\d{1,2}$'
+        senderCorrespondentAccount:
+          type: string
+        senderCorrespondentName:
+          type: string
+        senderCorrespondentOption:
+          type: string
+        senderToReceiverInformation:
+          type: string
+        transactionReferenceNumber:
+          type: string
+        transactionRelatedReference:
+          type: string
+        transactionTypeCode:
+          type: string
+        urgent:
+          type: string
+        valueDateCurrencyInterbankSettledAmount:
+          type: string
+      required:
+        - bankOperationCode

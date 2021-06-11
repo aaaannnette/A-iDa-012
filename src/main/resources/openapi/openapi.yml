@@ -12,12 +12,12 @@ paths:
           description: "Номер счета"
           schema:
             type: string
-        - name: curFormat
-          in: query
-          required: false
-          description: "Формат операции по валютному счету"
-          schema:
-            type: string
+        # - name: curFormat
+        #   in: query
+        #   required: false
+        #   description: "Формат операции по валютному счету"
+        #   schema:
+        #     type: string
         - name: statementDate
           in: query
           description: "Дата запрашиваемой выписки"
@@ -64,6 +64,7 @@ components:
         transactionId:
           type: integer
           format: int64
+          pattern: '^\d{13}$'
       required:
         - correspondingAccount
         - uuid
@@ -74,7 +75,8 @@ components:
       type: object
       properties:
         amount:
-          type: integer
+          type: number
+          format: float
           minimum: 0.01
           pattern: '^\d*.\d{1,2}$'
         currencyName:
@@ -90,18 +92,24 @@ components:
       properties:
         bankOperationCode:
           type: string
+          pattern: '^\w{4}$'
         beneficiaryBankAccount:
           type: string
+          format: password 
+          maxLength: 11
         beneficiaryBankName:
           type: string
         beneficiaryBankOption:  
           type: string
+          pattern: '^\w[A-Z]{1}$'
         beneficiaryCustomerAccount:
           type: string
+          format: password
         beneficiaryCustomerName:
           type: string
         detailsOfCharges:
           type: string
+          pattern: '^\w[A-Z]{3}$'
         exchangeRate:
           type: string
           format: float
@@ -109,12 +117,16 @@ components:
           type: string
         instructionCode:
           type: string
+          pattern: '^\w[A-Z]{4}$'
         intermediaryBankAccount:
           type: string
+          format: password
+          pattern: '^\w[A-Z]{8}$'
         intermediaryBankName:
           type: string
         intermediaryBankOption:
           type: string
+          pattern: '^\w[A-Z]{1}$'
         messageDestinator:
           type: string
         messageIdentifier:
@@ -128,28 +140,33 @@ components:
           type: string
           format: date-time
         messageType:
-          type: integer
+          type: string
         orderingCustomerAccount:
           type: string
+          format: password
         orderingCustomerName:
           type: string
         orderingCustomerOption:
           type: string
+          pattern: '^\w[A-Z]{1}$'
         orderingInstitutionAccount:
           type: string
         orderingInstitutionName:
           type: string
         orderingInstitutionOption:
           type: string
+          pattern: '^\w[A-Z]{1}$'
         receiverCharges:
           type: string
           pattern: '^\w[A-Z]{3}\d+,\d{1,2}$'
         receiverCorrespondentAccount:
           type: string
+          format: password
         receiverCorrespondentName:
           type: string
         receiverCorrespondentOption:
           type: string
+          pattern: '^\w[A-Z]{1}$'
         regulatoryReporting:
           type: string
         remittanceInformation:
@@ -159,10 +176,12 @@ components:
           pattern: '^\w[A-Z]{3}\d+,\d{1,2}$'
         senderCorrespondentAccount:
           type: string
+          format: password
         senderCorrespondentName:
           type: string
         senderCorrespondentOption:
           type: string
+          pattern: '^\w[A-Z]{1}$'
         senderToReceiverInformation:
           type: string
         transactionReferenceNumber:
@@ -173,7 +192,15 @@ components:
           type: string
         urgent:
           type: string
+          pattern: '^\w[A-Z]{6}$'
         valueDateCurrencyInterbankSettledAmount:
           type: string
       required:
         - bankOperationCode
+          
+      
+                        
+                        
+                        
+                    
+        

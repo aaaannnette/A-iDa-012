@@ -1,0 +1,8 @@
+springdoc:
+  default-consumes-media-type: application/json
+
+
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui
+    url: /openapi.yml

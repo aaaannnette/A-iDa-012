@@ -197,10 +197,3 @@ components:
           type: string
       required:
         - bankOperationCode
-          
-      
-                        
-                        
-                        
-                    
-        

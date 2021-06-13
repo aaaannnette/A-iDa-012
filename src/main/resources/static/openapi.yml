@@ -36,19 +36,19 @@ paths:
           description: Invalid username supplied
         '404':
           description: Not Found
-          
+
 components:
   schemas:
     Transactions:
-        properties:
-          transactions:
-            type: array
-            items: 
-              $ref: '#/components/schemas/Transaction'
-        required:
-          - transactions
+      properties:
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+      required:
+        - transactions
 
-    Transaction:  
+    Transaction:
       type: object
       properties:
         amount:
@@ -69,8 +69,8 @@ components:
         - correspondingAccount
         - uuid
         - transactionId
-            
-          
+
+
     Amount:
       type: object
       properties:
@@ -85,8 +85,8 @@ components:
       required:
         - amount
         - currencyName
-          
-          
+
+
     SwiftTransfer:
       type: object
       properties:
@@ -95,16 +95,18 @@ components:
           pattern: '^\w{4}$'
         beneficiaryBankAccount:
           type: string
-          format: password 
+          format: password
           maxLength: 11
         beneficiaryBankName:
           type: string
-        beneficiaryBankOption:  
+        beneficiaryBankOption:
           type: string
           pattern: '^\w[A-Z]{1}$'
         beneficiaryCustomerAccount:
           type: string
           format: password
+          maxLength: 19
+          pattern: '^\\w[A-Z]{2}\d{17}$'
         beneficiaryCustomerName:
           type: string
         detailsOfCharges:
@@ -144,6 +146,8 @@ components:
         orderingCustomerAccount:
           type: string
           format: password
+          maxLength: 18
+          pattern: '^\\d{17}$'
         orderingCustomerName:
           type: string
         orderingCustomerOption:
@@ -151,6 +155,9 @@ components:
           pattern: '^\w[A-Z]{1}$'
         orderingInstitutionAccount:
           type: string
+          format: password
+          maxLength: 11
+          pattern: '^\w[A-Z]{8}\d{3}$'
         orderingInstitutionName:
           type: string
         orderingInstitutionOption:
@@ -162,6 +169,8 @@ components:
         receiverCorrespondentAccount:
           type: string
           format: password
+          maxLength: 8
+          pattern: '^\w[A-Z]{8}$'
         receiverCorrespondentName:
           type: string
         receiverCorrespondentOption:
@@ -177,6 +186,8 @@ components:
         senderCorrespondentAccount:
           type: string
           format: password
+          maxLength: 8
+          pattern: '^\w[A-Z]{6}\d{1}\w[A-Z]{1}$'
         senderCorrespondentName:
           type: string
         senderCorrespondentOption:
@@ -197,3 +208,10 @@ components:
           type: string
       required:
         - bankOperationCode
+
+
+
+
+
+
+
